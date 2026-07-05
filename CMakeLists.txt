@@ -97,10 +97,12 @@ add_executable(run_sim src/main.cpp)
 
 target_link_libraries(run_sim PRIVATE magnus_stack)
 
-# NOTE: add this for testing add_executable(mem_test tests/FILENAME.cpp)
-# target_include_directories(mem_test PRIVATE src) include(GoogleTest)
-# target_link_libraries(mem_test PRIVATE GTest::gtest_main)
-# gtest_discover_tests(mem_test)
+# NOTE: add this for testing
+add_executable(reactor_tests tests/flowsheet_test.cpp)
+target_include_directories(reactor_tests PRIVATE tests src)
+include(GoogleTest)
+target_link_libraries(reactor_tests PRIVATE magnus_stack GTest::gtest_main)
+gtest_discover_tests(reactor_tests)
 
 # ensures that calc executable get's linked against libcalclib.a PRIVATE: almost
 # redundant as nothing ever really links against an executable (calc) anyhow.
