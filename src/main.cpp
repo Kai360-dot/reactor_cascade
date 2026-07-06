@@ -31,6 +31,17 @@ int main()
   if (!NS.setup()) return 1;
   // run nested sampling
   int status = NS.sample({0.05, 0.55, 0.70});  // constraint thresholds
+  // NOTE: this prints a table of progress:
+  // Iterations vs Contour, #Feas, #Dead, Factor
+  // - Iterations: Each iteration a new ellipsoidal nest is refit around live
+  // set and NUMPROP cnadidates are proposed inside of it.
+  // - Contour: criterion value of "worst" live poitn.
+  // (_liveFEAS.rbegin()->first) has to drop <= 0 for entire live set to be
+  // feasible.
+  // - #Feas: cumulative count of feasible points thus far.
+  // - #Dead: number of dead poitns thus far
+  // - Factor: current inflation applied to live-set ellipsoid when proposing
+  // (ELLMAG * nestMass^ELLRED) shrinks with iterations
 
   NS.stats.display();
   // refer to: _liveFEAS.insert in MANGUS NSFEAS
@@ -47,7 +58,6 @@ int main()
       f << "\n";
     }
   };
-
 
   dump(NS.live_points(), "live_points.csv");        // DS sample
   dump(NS.dead_points(), "dead_points.csv");        // killed during run
