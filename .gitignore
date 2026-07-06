@@ -1,5 +1,7 @@
 build
 Testing/Temporary
 *.csv
+*.png
 plots/__pycache__
 plots/trellis.png
+plots/trellis_live_dead.png
