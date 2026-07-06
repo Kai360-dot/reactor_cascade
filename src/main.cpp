@@ -14,8 +14,8 @@ int main()
 
   mc::NSFEAS NS;
   NS.options.FEASCRIT  = mc::NSFEAS::Options::VAR;
-  NS.options.NUMLIVE   = 512;
-  NS.options.NUMPROP   = 16;
+  NS.options.NUMLIVE   = 8192;
+  NS.options.NUMPROP   = 256;
   NS.options.MAXITER   = 20'000;
   NS.options.MAXTHREAD = 0;
   NS.options.DISPLEVEL = 1;
