@@ -38,6 +38,7 @@ struct Flowsheet
 
     // only benzene in feed initially:
     std::vector<mc::FFVar> feed{mc::FFVar(CA0), mc::FFVar(0.0), mc::FFVar(0.0)};
+    // the calls to Flowsheet::cstr() build up expression trees
     out1 = cstr(feed, D[0], D[1], P[0], P[1]);
     out2 = cstr(out1, D[2], D[3], P[2], P[3]);
 
@@ -45,8 +46,11 @@ struct Flowsheet
     mc::FFVar tot2 = out2[0] + out2[1] + out2[2];  // cA + cB + cC
 
     // constraints: (C[i] : constraint scalar)
-    G = {out1[2] / tot1 - C[0], C[1] - out2[1] / tot2,
-         C[2] - (1 - out2[0] / CA0)};
+    G = {
+        out1[2] / tot1 - C[0],      // DCB fraction cap cstr-1
+        C[1] - out2[1] / tot2,      // MCB purity floor cstr-2
+        C[2] - (1 - out2[0] / CA0)  // conversion floor benzene cstr-2
+    };
   }
 
   std::vector<mc::FFVar> cstr(std::vector<mc::FFVar> const& in,
