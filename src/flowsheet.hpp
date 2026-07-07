@@ -53,9 +53,9 @@ struct Flowsheet
     };
   }
 
-  std::vector<mc::FFVar> cstr(std::vector<mc::FFVar> const& in,
+  static std::vector<mc::FFVar> cstr(std::vector<mc::FFVar> const& in,
                               mc::FFVar const& T, mc::FFVar const& tau,
-                              mc::FFVar const& th1, mc::FFVar const& th2) const
+                              mc::FFVar const& th1, mc::FFVar const& th2)
   {
     mc::FFVar k1 = th1 * exp(-E1 / (R * T));
     mc::FFVar k2 = th2 * exp(-E2 / (R * T));
