@@ -44,6 +44,7 @@ int main()
 
   // run simulation:
   int status = NS.sample({0.05});  // constraint thresholds
+  // simulation complete, below is postprocessing
 
   NS.stats.display();
 
