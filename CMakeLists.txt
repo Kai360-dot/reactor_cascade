@@ -97,6 +97,10 @@ add_executable(run_sim src/main.cpp)
 
 target_link_libraries(run_sim PRIVATE magnus_stack)
 
+# Sobol sweep of joint design box -> cstr-2 inlet box
+add_executable(step0_sobol src/step0_sobol.cpp)
+target_link_libraries(step0_sobol PRIVATE magnus_stack)
+
 # NOTE: add this for testing
 add_executable(reactor_tests tests/flowsheet_test.cpp)
 target_include_directories(reactor_tests PRIVATE tests src)
