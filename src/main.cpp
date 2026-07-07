@@ -10,6 +10,8 @@ int main()
 {
   arma::arma_rng::set_seed(42);
   mc::FFGraph dag;
+  // creates a DAG of operations: inputs (D, P, C) at bottom,
+  // and outputs of (out1, out2, G) at top, with operations linking them.
   Flowsheet fs(dag);
 
   mc::NSFEAS NS;
@@ -21,8 +23,10 @@ int main()
   NS.options.DISPLEVEL = 1;
 
   NS.set_dag(dag);
-  NS.set_control(fs.D, {298.15, 2.0, 298.15, 2.0},
-                 {353.15, 30.0, 353.15, 30.0});
+  NS.set_control(fs.D,                         // nodes in graph to set values
+                 {298.15, 2.0, 298.15, 2.0},   // lower bounds
+                 {353.15, 30.0, 353.15, 30.0}  // upper bounds
+  );
   const auto th = Flowsheet::theta_nominal();
   NS.set_parameter(fs.P, {th[0], th[1], th[0], th[1]});  // nominal CSP
   NS.set_constant(fs.C);
