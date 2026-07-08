@@ -113,6 +113,9 @@ target_link_libraries(step0_sobol PRIVATE magnus_stack)
 add_executable(unit1_sample src/unit1_sample.cpp)
 target_link_libraries(unit1_sample PRIVATE magnus_stack)
 
+add_executable(mlp_check src/mlp_check.cpp)
+target_link_libraries(mlp_check PRIVATE magnus_stack)
+
 # NOTE: add this for testing
 add_executable(reactor_tests tests/flowsheet_test.cpp)
 target_include_directories(reactor_tests PRIVATE tests src)
