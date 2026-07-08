@@ -2,9 +2,9 @@ import pandas as pd
 
 from trellis import trellis_plot
 
-df_live_ = pd.read_csv("../live_points.csv")
-df_dead_ = pd.read_csv("../dead_points.csv")
-df_disc_ = pd.read_csv("../discard_points.csv")
+df_live_ = pd.read_csv("../data/live_points.csv")
+df_dead_ = pd.read_csv("../data/dead_points.csv")
+df_disc_ = pd.read_csv("../data/discard_points.csv")
 
 
 def plot_df(df_live: pd.DataFrame, df_dead: pd.DataFrame):

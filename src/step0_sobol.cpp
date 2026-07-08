@@ -2,8 +2,8 @@
 // Per-componoent min/max +5% span inflation
 // -> inlet box for unit-2 subproblem
 // Outputs:
-// - step0_sobol.csv
-// - unit2_inlet_box.csv
+// - data/step0_sobol.csv
+// - data/unit2_inlet_box.csv
 #include <algorithm>
 #include <cstddef>
 #include <fstream>
@@ -37,7 +37,7 @@ int main()
   std::list<std::vector<double>> samples =
       mc::BASE_SAMPLING::uniform_sample(1024, dLB, dUB);
 
-  std::ofstream fsam("step0_sobol.csv");
+  std::ofstream fsam("data/step0_sobol.csv");
   fsam << "T1,tau1,T2,tau2,cA1,cB1,cC1,g1\n";
 
   // running per componnet min/max of unit-1 outlet
@@ -79,7 +79,7 @@ int main()
   /* Output results to file and console */
 
   // inflate by 5% of span on each side (total 10%); concentrations remain >= 0
-  std::ofstream fbox("unit2_inlet_box.csv");
+  std::ofstream fbox("data/unit2_inlet_box.csv");
   fbox << "bound,cA,cB,cC\n";
   std::cout << "unit-2 inlet box from 1024 Sobol points:\n";
   fbox << "lb";

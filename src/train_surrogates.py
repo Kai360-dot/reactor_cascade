@@ -5,9 +5,10 @@ This script trains 3 separate ANN surrogates on the simulation data from cstr-1
 - cu: Feasibility predictor (similar to c1) but using outputs of cstr-1 as
   inputs, i.e. (c1A, c1B, c1C => In/Feasible (>/<= 0))
 
-mlp_predcheck.csv is used for checking whether the predictions of the ANN are
+data/mlp_predcheck.csv is used for checking whether the predictions of the ANN are
 robustly mirrored in the C++ executables, i.e. to check for conversion errors.
 """
+
 import csv
 
 import numpy as np
@@ -32,7 +33,7 @@ def load(fname):
         return rows
 
 
-data = np.vstack([load(f"unit1_{k}.csv") for k in ("live", "dead", "discard")])
+data = np.vstack([load(f"data/unit1_{k}.csv") for k in ("live", "dead", "discard")])
 # [crit, feasprob, T1, tau1, cA1, cB1, cC1]
 crit, d1, outlet = data[:, 0:1], data[:, 2:4], data[:, 4:7]
 print(f"training rows: {len(data)} feasible: {(crit < 0).mean():.1%}")
@@ -89,7 +90,7 @@ def fold_and_export(name, net, scales):
     W[0] = W[0] / xsig[None, :]
     W[-1] = ysig[:, None] * W[-1]  # y = y_std*ysig + ymu
     b[-1] = ysig * b[-1] + ymu
-    with open(f"mlp_{name}.txt", "w") as f:
+    with open(f"data/mlp_{name}.txt", "w") as f:
         f.write(f"{len(W)}\n")
         for Wl, bl in zip(W, b):
             f.write(f"{Wl.shape[1]} {Wl.shape[0]}\n")
@@ -127,7 +128,7 @@ print(f"s1 held-out: rmse per outlet {np.sqrt(np.mean((p_s1 - outlet[hold]) ** 2
 print(f"cu held-out: class acc {((p_cu <= 0) == lab).mean():.1%}")
 
 # ---- cross-check file for reference/mlp_check.cpp --------------------------
-with open("mlp_predcheck.csv", "w") as f:
+with open("data/mlp_predcheck.csv", "w") as f:
     f.write("T1,tau1,cA1,cB1,cC1,c1_pred,sA_pred,sB_pred,sC_pred,cu_pred\n")
     for i, k in enumerate(hold):
         f.write(
@@ -137,4 +138,4 @@ with open("mlp_predcheck.csv", "w") as f:
             )
             + "\n"
         )
-print("wrote mlp_c1.txt mlp_s1.txt mlp_cu.txt mlp_predcheck.csv")
+print("wrote data/mlp_c1.txt data/mlp_s1.txt data/mlp_cu.txt data/mlp_predcheck.csv")

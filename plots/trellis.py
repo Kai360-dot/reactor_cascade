@@ -337,8 +337,8 @@ def trellis_plot(
 if __name__ == "__main__":
     import pandas as pd
 
-    live = pd.read_csv("../live_points.csv")
-    dead = pd.read_csv("../dead_points.csv")
+    live = pd.read_csv("../data/live_points.csv")
+    dead = pd.read_csv("../data/dead_points.csv")
     trellis_plot(
         [dead["T1"], live["T1"]],
         [dead["tau1"], live["tau1"]],

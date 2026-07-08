@@ -75,9 +75,9 @@ int main()
     }
   };
 
-  dump(NS.live_points(), "unit1_live.csv");        // DS sample
-  dump(NS.dead_points(), "unit1_dead.csv");        // killed during run
-  dump(NS.discard_points(), "unit1_discard.csv");  // rejected proposals
+  dump(NS.live_points(), "data/unit1_live.csv");        // DS sample
+  dump(NS.dead_points(), "data/unit1_dead.csv");        // killed during run
+  dump(NS.discard_points(), "data/unit1_discard.csv");  // rejected proposals
 
   return status;
 }

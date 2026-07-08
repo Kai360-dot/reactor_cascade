@@ -16,9 +16,9 @@
 
 int main()
 {
-  MLP c1 = MLP::load("mlp_c1.txt");
-  MLP s1 = MLP::load("mlp_s1.txt");
-  MLP cu = MLP::load("mlp_cu.txt");
+  MLP c1 = MLP::load("data/mlp_c1.txt");
+  MLP s1 = MLP::load("data/mlp_s1.txt");
+  MLP cu = MLP::load("data/mlp_cu.txt");
 
   mc::FFGraph dag;
   std::vector<mc::FFVar> vd = dag.add_vars(2, "d");  // (T1, tau1)
@@ -33,7 +33,7 @@ int main()
   mc::FFSubgraph sg = dag.subgraph(dep);
   std::vector<double> wk, res(dep.size());
 
-  std::ifstream f("mlp_predcheck.csv");
+  std::ifstream f("data/mlp_predcheck.csv");
   std::string line;
   std::getline(f, line);  // header
   size_t n{}, fail{};
