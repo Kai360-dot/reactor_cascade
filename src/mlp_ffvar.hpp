@@ -2,6 +2,7 @@
 #define MLP_FFVAR_HPP
 
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <fstream>
 #include <sstream>
@@ -42,6 +43,26 @@ struct MLP
     return net;
   }
 
+  template <typename T>
+  std::vector<T> operator()(std::vector<T> x) const
+  {
+    using std::tanh; // ADL picks mc::FFVar's tanh or std::tanh depending on T
+    for (size_t l{}; l < layers.size(); ++l)
+    {
+      const auto& L = layers[l];
+      std::vector<T> y;
+      y.reserve(L.nout);
+      for (size_t i{}; i < L.nout; ++i)
+      {
+        T s = L.b[i]; // initialize w/ bias
+        for (size_t j{}; j < L.nin; ++j) s += L.W[i][j] * x[j];
+        // tanh isn't applied to last layers output
+        y.push_back(l + 1 < layers.size() ? tanh(s) : s);
+      }
+      x = std::move(y);
+    }
+    return x;
+  }
 };
 
 #endif  // MLP_FFVAR_HPP
