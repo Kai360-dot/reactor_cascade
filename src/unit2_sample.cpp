@@ -71,4 +71,37 @@ int main()
   // third constraint from ANN
   MLP cu = MLP::load("data/mlp_cu.txt");
   G2.push_back(cu(U2)[0]);
+
+  mc::NSFEAS NS;
+  NS.set_dag(dag);
+  NS.options.FEASCRIT  = mc::NSFEAS::Options::VAR;
+  NS.options.NUMLIVE   = 8192;
+  NS.options.NUMPROP   = 256;
+  NS.options.MAXITER   = 20'000;
+  NS.options.MAXTHREAD = 0;
+  NS.options.DISPLEVEL = 1;
+
+  std::vector<mc::FFVar> ctrl_v{D2};
+  ctrl_v.insert(ctrl_v.cend(), U2.cbegin(), U2.cend());
+
+  std::vector<double> ctrl_v_lb{298.15, 2.0};
+  ctrl_v_lb.insert(ctrl_v_lb.cend(), uLB.cbegin(), uLB.cend());
+
+  std::vector<double> ctrl_v_ub{353.15, 30.0};
+  ctrl_v_ub.insert(ctrl_v_ub.cend(), uUB.cbegin(), uUB.cend());
+
+  NS.set_control(ctrl_v, ctrl_v_lb,  // lower bounds
+                 ctrl_v_ub);         // upper bounds
+  auto th = Flowsheet::theta_nominal();
+  NS.set_parameter(P2, {th[0], th[1]});
+  NS.set_constant(C2);
+  NS.set_constraint(G2);
+
+  // run nested sampling
+  if (!NS.setup()) return 1;
+
+  // NOTE: only last two values are used as compared to src/main.cpp
+  int status = NS.sample({0.55, 0.70});
+  NS.stats.display();
+  return status;
 }
