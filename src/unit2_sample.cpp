@@ -10,9 +10,9 @@
 
 #include <armadillo>
 #include <cstddef>
+#include <ffunc.hpp>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -48,6 +48,27 @@ static void load_box(std::vector<double>& lb, std::vector<double>& ub)
 
 int main()
 {
-  std::vector<double> inp_lb, inp_ub;
-  load_box(inp_lb, inp_ub);
+  arma::arma_rng::set_seed(42);
+  // load inflated bounds on input from initial global sampling file
+  std::vector<double> uLB, uUB;
+  load_box(uLB, uUB);
+
+  mc::FFGraph dag;
+  auto D2 = dag.add_vars(2, "d");  // T2, tau2
+  auto U2 = dag.add_vars(3, "u");  // cA, cB, cC (inlet)
+  auto P2 = dag.add_vars(2, "p");  // theta1, theta2 (Arrhenius)
+  // constraint values (cu constraint is implicit, purity and conversion floor)
+  auto C2 = dag.add_vars(2, "c");
+
+  // reactor setup
+  auto out2 = Flowsheet::cstr(U2, D2[0], D2[1], P2[0], P2[1]);
+  auto tot2 = out2[0] + out2[1] + out2[2];
+
+  std::vector<mc::FFVar> G2{
+      C2[0] - out2[1] / tot2,                 // MCB purity floor cstr-2
+      C2[1] - (1 - out2[0] / Flowsheet::CA0)  // conversion floor benzene cstr-2
+  };
+  // third constraint from ANN
+  MLP cu = MLP::load("data/mlp_cu.txt");
+  G2.push_back(cu(U2)[0]);
 }
