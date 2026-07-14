@@ -119,6 +119,9 @@ target_link_libraries(unit2_sample PRIVATE magnus_stack)
 add_executable(mlp_check src/mlp_check.cpp)
 target_link_libraries(mlp_check PRIVATE magnus_stack)
 
+add_executable(reconstruct src/reconstruct.cpp)
+target_link_libraries(reconstruct PRIVATE magnus_stack)
+
 # NOTE: add this for testing
 add_executable(reactor_tests tests/flowsheet_test.cpp)
 target_include_directories(reactor_tests PRIVATE tests src)
