@@ -11,8 +11,8 @@
 struct Flowsheet
 {
   static constexpr double R    = 8.314;   // J/mol/K
-  static constexpr double E1   = 35'000;  // J/mol/K
-  static constexpr double E2   = 40'000;  // J/mol/K
+  static constexpr double E1   = 48'000;  // J/mol
+  static constexpr double E2   = 55'000;  // J/mol
   static constexpr double CA0  = 11.28;   // mol/L; pure benzene feed
   static constexpr double TREF = 328.15;  // K; temperature
 
@@ -54,8 +54,8 @@ struct Flowsheet
   }
 
   static std::vector<mc::FFVar> cstr(std::vector<mc::FFVar> const& in,
-                              mc::FFVar const& T, mc::FFVar const& tau,
-                              mc::FFVar const& th1, mc::FFVar const& th2)
+                                     mc::FFVar const& T, mc::FFVar const& tau,
+                                     mc::FFVar const& th1, mc::FFVar const& th2)
   {
     mc::FFVar k1 = th1 * exp(-E1 / (R * T));
     mc::FFVar k2 = th2 * exp(-E2 / (R * T));
