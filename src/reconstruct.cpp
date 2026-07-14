@@ -11,6 +11,7 @@
  * configuration from cstr-1 will be skipped.
  * */
 
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <ffunc.hpp>
@@ -22,7 +23,6 @@
 
 #include "flowsheet.hpp"
 #include "loaders.hpp"
-#include "mlp_ffvar.hpp"
 
 static constexpr double RTOL = 0.05;
 // Number of Subsamples, as 8192 are more than is needed
@@ -59,8 +59,10 @@ static std::vector<std::vector<double>> load_csv(const std::string& name)
 
 int main()
 {
+  // crit,feasprob,T1,tau1,cA1,cB1,cC1
   auto live1 = load_csv("data/unit1_live.csv");
-  auto live2 = load_csv("data/unit2_live_points.csv");
+  // crit,feasprob,T2,tau2,c1A,c1B,c1C
+  auto live2 = load_csv("data/unit2_live.csv");
 
   // load inflated bounds on input from initial global sampling file
   std::vector<double> uLB, uUB;
@@ -81,13 +83,39 @@ int main()
 
   assert(live1.size() >= NSUB && "NSUB must be a subset of all points");
   size_t stride = live1.size() > NSUB ? live1.size() / NSUB : 1;
-  size_t cand{}, truefeas{}, unmatched{};
+  size_t cand{}, truefeas{}, unmatched{}, tried{};
+
   for (size_t i{}; i < live1.size(); i += stride)
   {
     std::vector<double> r1 = live1[i];
-    size_t m{};  // count matches on cstr-2 set
-    // TODO: inner loop to find points on cstr-2 set that are matchable to RTOL
-    // with point r1. 
+    size_t m               = 0;  // count matches on cstr-2 set
+    ++tried;
+    for (const auto& r2 : live2)
+    {
+      double dist = 0.0;
+      for (size_t k = 0; k < 3; ++k)
+      {
+        dist = std::max(dist, std::fabs(r2[4 + k] - r1[4 + k]) / span[k]);
+      }
+      if (dist > RTOL) continue;  // point doesn't qualify
+      std::vector<double> dD{r1[2], r1[3], r2[2], r2[3]};  // T1, tau1, T2, tau2
+      dag.eval(sg, wk, fs.G, g, fs.D, dD, fs.P, dP, fs.C, dC);
+      bool feas = g[0] <= 0 && g[1] <= 0 && g[2] <= 0;
+      ofs << dD[0] << "," << dD[1] << "," << dD[2] << "," << dD[3] << ","
+          << g[0] << "," << g[1] << "," << g[2] << "," << static_cast<int>(feas)
+          << "\n";
+      ++cand;
+      truefeas += static_cast<int>(feas);
+      if (++m >= MMAX) break;
+    }
+    if (m == 0) ++unmatched;
+  }
+  if (cand)
+  {
+    auto false_feas_rate = 100.0 * (cand - truefeas) / cand;
+    std::cout << "reconstruction: " << cand << " pairs " << truefeas
+              << " true-feasible " << false_feas_rate << " false-feasible rate "
+              << unmatched << "/" << tried << " unmatched.\n";
   }
 
   return 0;
