@@ -18,7 +18,7 @@ TEST(Flowsheet, ValidateBasicSetup)
   // pick 9 output handles from graph (pointers into dag)
   mc::FFSubgraph sg = dag.subgraph(out);
   std::vector<double> wk, res(out.size());
-  auto const th = Flowsheet::theta_nominal();
+  const auto th = Flowsheet::theta_nominal();
   std::vector<double> dD{328.15, 3.0, 328.15, 5.0};  // nominal design (T, tau)
   std::vector<double> dP{th[0], th[1], th[0], th[1]};
   std::vector<double> dC{0.05, 0.55, 0.70};

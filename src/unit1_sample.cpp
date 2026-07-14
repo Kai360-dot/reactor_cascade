@@ -36,7 +36,7 @@ int main()
   NS.set_dag(dag);
   // set lower and upper bounds
   NS.set_control(D, {298.15, 2.0}, {353.15, 30.0});
-  const std::array<double, 2> th = Flowsheet::theta_nominal();
+  const auto th = Flowsheet::theta_nominal();
   NS.set_parameter(P, {th[0], th[1]});  // nominal CSP
   NS.set_constant(C);
   NS.set_constraint(G);

@@ -66,7 +66,7 @@ int main()
 
   NS.set_control(ctrl_v, ctrl_v_lb,  // lower bounds
                  ctrl_v_ub);         // upper bounds
-  auto th = Flowsheet::theta_nominal();
+  const auto th = Flowsheet::theta_nominal();
   NS.set_parameter(P2, {th[0], th[1]});
   NS.set_constant(C2);
   NS.set_constraint(G2);
