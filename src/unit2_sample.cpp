@@ -103,5 +103,25 @@ int main()
   // NOTE: only last two values are used as compared to src/main.cpp
   int status = NS.sample({0.55, 0.70});
   NS.stats.display();
+
+  auto dump = [](const auto& pts, const std::string& name) {
+    std::ofstream f(name);
+    f << "crit,feasprob,T2,tau2,cA,cB,cC\n";
+    for (const auto& [crit, pt] : pts)
+    {
+      f << crit << "," << std::get<1>(pt);
+      for (size_t i{}; i < 5; ++i)
+      {
+        f << "," << std::get<0>(pt)[i];
+      };
+      f << "\n";
+    }
+  };
+
+  dump(NS.live_points(), "data/unit2_live_points.csv");  // DS sample
+  dump(NS.dead_points(), "data/unit2_dead_points.csv");  // killed during run
+  dump(NS.discard_points(), "data/unit2_discard_points.csv");  // rejected
+  // proposals
+
   return status;
 }
