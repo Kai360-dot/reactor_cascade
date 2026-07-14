@@ -29,8 +29,6 @@ void load_box(std::vector<double>& lb, std::vector<double>& ub)
   read_(lb);
   read_(ub);
   // lb, ub
-  for (auto e : lb) std::cout << e << "\n";
-  for (auto e : ub) std::cout << e << "\n";
 }
 
 #endif  // LOADERS_HPP
