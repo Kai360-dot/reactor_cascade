@@ -20,6 +20,7 @@ struct MLP
   };
   std::vector<Layer> layers;
 
+  [[__nodiscard__]]
   static MLP load(std::string const& path)
   {
     std::ifstream f(path);
