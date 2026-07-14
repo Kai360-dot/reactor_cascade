@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 
 inline
 void load_box(std::vector<double>& lb, std::vector<double>& ub)
