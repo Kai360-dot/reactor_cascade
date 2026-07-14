@@ -106,7 +106,7 @@ int main()
 
   auto dump = [](const auto& pts, const std::string& name) {
     std::ofstream f(name);
-    f << "crit,feasprob,T2,tau2,cA,cB,cC\n";
+    f << "crit,feasprob,T2,tau2,c1A,c1B,c1C\n";
     for (const auto& [crit, pt] : pts)
     {
       f << crit << "," << std::get<1>(pt);
