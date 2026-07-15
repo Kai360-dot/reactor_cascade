@@ -102,13 +102,13 @@ set(CMAKE_BUILD_RPATH
 # target_compile_features(calclib PUBLIC cxx_std_11)
 
 # produces the executable named calc to be run via ./calc from /build folder
-add_executable(run_sim src/main.cpp)
+add_executable(global_sample src/global_sample.cpp)
 
-target_link_libraries(run_sim PRIVATE magnus_stack)
+target_link_libraries(global_sample PRIVATE magnus_stack)
 
 # Sobol sweep of joint design box -> cstr-2 inlet box
-add_executable(step0_sobol src/step0_sobol.cpp)
-target_link_libraries(step0_sobol PRIVATE magnus_stack)
+add_executable(inlet_box_sobol src/inlet_box_sobol.cpp)
+target_link_libraries(inlet_box_sobol PRIVATE magnus_stack)
 
 add_executable(unit1_sample src/unit1_sample.cpp)
 target_link_libraries(unit1_sample PRIVATE magnus_stack)
