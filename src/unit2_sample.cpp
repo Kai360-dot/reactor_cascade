@@ -3,9 +3,9 @@
  * subject to three constraints: g2, g3 (product purity and conversion floor
  * from  global problem) and rho: (reachability, assessed via cu ANN)
  * outputs: (all with [crit,feasprob,T2,tau2,cA,cB,cC] header line)
- * - unit2_live.csv (final design-space sample)
- * - unit2_dead.csv
- * - unit2_discard.csv
+ * - data/unit2_live.csv (final design-space sample)
+ * - data/unit2_dead.csv
+ * - data/unit2_discard.csv
  */
 
 #include <armadillo>
@@ -74,7 +74,7 @@ int main()
   // run nested sampling
   if (!NS.setup()) return 1;
 
-  // NOTE: only last two values are used as compared to src/main.cpp
+  // NOTE: only last two values are used as compared to src/global_sample.cpp
   int status = NS.sample({0.55, 0.70});
   NS.stats.display();
 

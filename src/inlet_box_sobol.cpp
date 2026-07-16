@@ -1,8 +1,8 @@
-// step 0: sobol sample joint design space, recording unit-1 outlets.
+// inlet box sobol sample joint design space, recording unit-1 outlets.
 // Per-componoent min/max +5% span inflation
 // -> inlet box for unit-2 subproblem
 // Outputs:
-// - data/step0_sobol.csv  NOTE: Not currently used downstream!
+// - data/inlet_box.csv  NOTE: Not currently used downstream!
 // - data/unit2_inlet_box.csv
 #include <algorithm>
 #include <cstddef>
@@ -34,13 +34,13 @@ int main()
   std::vector<double> dP{th[0], th[1], th[0], th[1]};
   std::vector<double> dC{0.05, 0.55, 0.70};  // C[0] needed by G[0]
 
-  // same joint box as (src/main.cpp)
+  // same joint box as (src/global_sample.cpp)
   const std::vector<double> dLB{298.15, 2.0, 298.15, 2.0};
   const std::vector<double> dUB{353.15, 30.0, 353.15, 30.0};
   std::list<std::vector<double>> samples =
       mc::BASE_SAMPLING::uniform_sample(1024, dLB, dUB);
 
-  std::ofstream fsam("data/step0_sobol.csv");
+  std::ofstream fsam("data/inlet_box.csv");
   fsam << "T1,tau1,T2,tau2,cA1,cB1,cC1,g1\n";
 
   // running per componnet min/max of unit-1 outlet

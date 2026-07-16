@@ -2,7 +2,7 @@
  * unit1_live.csv and unit2_live.csv. In a first step a (T1, tau1) pair
  * from unit1_live.csv is selected, (Note that its simulation results are
  * already known with full certainty as no surrogates were involved here.)
- * Now a set of other configurations (T2, tau2) from unit2_live_points.csv is
+ * Now a set of other configurations (T2, tau2) from unit2_live.csv is
  * required to fully specify the simulation. However random sampling is unlikely
  * to satisfy the feasibility constraints. Thus we choose only configurations
  * that have a `sampled input` which is relatively (+- 5% relative to
