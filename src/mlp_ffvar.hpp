@@ -48,15 +48,15 @@ struct MLP
   std::vector<T> operator()(std::vector<T> x) const
   {
     using std::tanh; // ADL picks mc::FFVar's tanh or std::tanh depending on T
-    for (size_t l{}; l < layers.size(); ++l)
+    for (size_t l = 0; l < layers.size(); ++l)
     {
       const auto& L = layers[l];
       std::vector<T> y;
       y.reserve(L.nout);
-      for (size_t i{}; i < L.nout; ++i)
+      for (size_t i = 0; i < L.nout; ++i)
       {
         T s = L.b[i]; // initialize w/ bias
-        for (size_t j{}; j < L.nin; ++j) s += L.W[i][j] * x[j];
+        for (size_t j = 0; j < L.nin; ++j) s += L.W[i][j] * x[j];
         // tanh isn't applied to last layers output
         y.push_back(l + 1 < layers.size() ? tanh(s) : s);
       }

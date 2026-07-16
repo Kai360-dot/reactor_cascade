@@ -84,7 +84,7 @@ int main()
     for (const auto& [crit, pt] : pts)
     {
       f << crit << "," << std::get<1>(pt);
-      for (size_t i{}; i < 5; ++i)
+      for (size_t i = 0; i < 5; ++i)
       {
         f << "," << std::get<0>(pt)[i];
       };

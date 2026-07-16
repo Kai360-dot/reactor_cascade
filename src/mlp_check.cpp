@@ -62,7 +62,7 @@ int main()
 
     // NOTE: This turns the ANN into DAG using MC++ for efficient evaluation
     dag.eval(sg, wk, dep, res, vd, d, vu, u);
-    for (size_t k{}; k < 5; ++k)
+    for (size_t k = 0; k < 5; ++k)
     {
       if (std::fabs(cpp[k] - py[k]) > 1e-9 || std::fabs(res[k] - cpp[k]) > 1e-9)
       {

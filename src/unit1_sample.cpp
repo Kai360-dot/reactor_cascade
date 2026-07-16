@@ -69,7 +69,7 @@ int main()
       // concrete numerical values. More such pairs can be provided if needed.
       dag.eval(sg, wk, out, res, D, dD, P, dP);
       f << crit << "," << std::get<1>(pt);
-      for (size_t i{}; i < 2; ++i) f << "," << dD[i];
+      for (size_t i = 0; i < 2; ++i) f << "," << dD[i];
       for (double v : res) f << "," << v;
       f << "\n";
     }

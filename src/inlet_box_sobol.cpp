@@ -67,11 +67,11 @@ int main()
     /* The function parameter pack <a>args</a> can be any number of extra vector
      * pairs {std::vector<FFVar> const& vVar, std::vector<U> const& uVar}. */
     dag.eval(sg, wk, out, res, fs.D, dD, fs.P, dP, fs.C, dC);  // subgraph only
-    for (size_t k{}; k < 4; ++k) fsam << dD[k] << ",";
+    for (size_t k = 0; k < 4; ++k) fsam << dD[k] << ",";
     fsam << res[0] << "," << res[1] << "," << res[2] << "," << res[3] << "\n";
 
     // update lower/upper bounds of inputs (c1A, c1B, c1C) for next unit
-    for (size_t k{}; k < 3; ++k)
+    for (size_t k = 0; k < 3; ++k)
     {
       uLB[k] = std::min(uLB[k], res[k]);
       uUB[k] = std::max(uUB[k], res[k]);
@@ -85,7 +85,7 @@ int main()
   fbox << "bound,cA,cB,cC\n";
   std::cout << "unit-2 inlet box from 1024 Sobol points:\n";
   fbox << "lb";
-  for (size_t k{}; k < 3; ++k)
+  for (size_t k = 0; k < 3; ++k)
   {
     const double span = uUB[k] - uLB[k];
     std::cout << " raw [" << uLB[k] << ", " << uUB[k] << "]";
@@ -95,7 +95,7 @@ int main()
     fbox << "," << uLB[k];
   }
   fbox << "\nub";
-  for (size_t k{}; k < 3; ++k) fbox << "," << uUB[k];
+  for (size_t k = 0; k < 3; ++k) fbox << "," << uUB[k];
   fbox << "\n";
 
   return 0;

@@ -18,7 +18,7 @@ inline void load_box(std::vector<double>& lb, std::vector<double>& ub)
 
   auto read_ = [&ifs, &word_](std::vector<double>& vec) {
     std::getline(ifs, word_, ',');  // skip first
-    for (size_t i{}; i < 3; ++i)
+    for (size_t i = 0; i < 3; ++i)
     {
       (i == 2) ? std::getline(ifs, word_) : std::getline(ifs, word_, ',');
       vec.push_back(std::stod(word_));

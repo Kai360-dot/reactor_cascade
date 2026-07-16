@@ -68,7 +68,7 @@ int main()
   std::vector<double> uLB, uUB;
   load_box(uLB, uUB);
   std::vector<double> span(3);
-  for (size_t k{}; k < 3; ++k) span[k] = uUB.at(k) - uLB.at(k);
+  for (size_t k = 0; k < 3; ++k) span[k] = uUB.at(k) - uLB.at(k);
 
   mc::FFGraph dag;
   Flowsheet fs(dag);
@@ -85,7 +85,7 @@ int main()
   size_t stride = live1.size() > NSUB ? live1.size() / NSUB : 1;
   size_t cand{}, truefeas{}, unmatched{}, tried{};
 
-  for (size_t i{}; i < live1.size(); i += stride)
+  for (size_t i = 0; i < live1.size(); i += stride)
   {
     std::vector<double> r1 = live1[i];
     size_t m               = 0;  // count matches on cstr-2 set
