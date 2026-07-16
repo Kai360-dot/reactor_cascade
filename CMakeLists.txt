@@ -122,6 +122,9 @@ target_link_libraries(mlp_check PRIVATE magnus_stack)
 add_executable(reconstruct src/reconstruct.cpp)
 target_link_libraries(reconstruct PRIVATE magnus_stack)
 
+add_executable(raw_sobol_global src/raw_sobol_global.cpp)
+target_link_libraries(raw_sobol_global PRIVATE magnus_stack)
+
 # NOTE: add this for testing
 add_executable(reactor_tests tests/flowsheet_test.cpp)
 target_include_directories(reactor_tests PRIVATE tests src)
