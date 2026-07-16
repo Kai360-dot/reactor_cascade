@@ -1,5 +1,5 @@
 /* This simulation simulates sampled pairs that have both been suggested by
- * unit1_live.csv and unit2_live_points.csv. In a first step a (T1, tau1) pair
+ * unit1_live.csv and unit2_live.csv. In a first step a (T1, tau1) pair
  * from unit1_live.csv is selected, (Note that its simulation results are
  * already known with full certainty as no surrogates were involved here.)
  * Now a set of other configurations (T2, tau2) from unit2_live_points.csv is
@@ -64,7 +64,7 @@ int main()
   // crit,feasprob,T2,tau2,c1A,c1B,c1C
   auto live2 = load_csv("data/unit2_live.csv");
 
-  // load inflated bounds on input from initial global sampling file
+  // load inflated bounds on input from initial sobol sampling
   std::vector<double> uLB, uUB;
   load_box(uLB, uUB);
   std::vector<double> span(3);

@@ -2,7 +2,7 @@
 // Per-componoent min/max +5% span inflation
 // -> inlet box for unit-2 subproblem
 // Outputs:
-// - data/step0_sobol.csv
+// - data/step0_sobol.csv  NOTE: Not currently used downstream!
 // - data/unit2_inlet_box.csv
 #include <algorithm>
 #include <cstddef>
@@ -25,6 +25,8 @@ int main()
 
   // NOTE: sg only contains the three output concentrations of cstr-1 (cA, cB,
   // cC) and the constraint G[0]
+  // NOTE: The subgraph `sg` is spawned up for efficiency purposes (similar to
+  // wk)
   mc::FFSubgraph sg = dag.subgraph(out);
   std::vector<double> wk, res(out.size());  // res holds results
   const auto th = Flowsheet::theta_nominal();
@@ -68,7 +70,7 @@ int main()
     for (size_t k{}; k < 4; ++k) fsam << dD[k] << ",";
     fsam << res[0] << "," << res[1] << "," << res[2] << "," << res[3] << "\n";
 
-    // update lower/upper bounds of inputs for next unit
+    // update lower/upper bounds of inputs (c1A, c1B, c1C) for next unit
     for (size_t k{}; k < 3; ++k)
     {
       uLB[k] = std::min(uLB[k], res[k]);
