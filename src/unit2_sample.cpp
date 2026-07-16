@@ -1,6 +1,6 @@
-/*  Solves cstr-2 subproblem by sampling the feed of cstr-2 that arrives
- *  from upstream unit cstr-1. We thus sample over (T2, tau2, c1A, c1B, c1C)
- *  subject to three constraints: g2, g3 (product purity and conversion floor
+/* Solves cstr-2 subproblem by sampling the feed of cstr-2 that arrives
+ * from upstream unit cstr-1. We thus sample over (T2, tau2, c1A, c1B, c1C)
+ * subject to three constraints: g2, g3 (product purity and conversion floor
  * from  global problem) and rho: (reachability, assessed via cu ANN)
  * outputs: (all with [crit,feasprob,T2,tau2,cA,cB,cC] header line)
  * - unit2_live.csv (final design-space sample)
@@ -16,9 +16,9 @@
 #include <vector>
 
 #include "flowsheet.hpp"
+#include "loaders.hpp"
 #include "mlp_ffvar.hpp"
 #include "nsfeas.hpp"
-#include "loaders.hpp"
 
 int main()
 {
@@ -92,8 +92,8 @@ int main()
     }
   };
 
-  dump(NS.live_points(), "data/unit2_live.csv");  // DS sample
-  dump(NS.dead_points(), "data/unit2_dead.csv");  // killed during run
+  dump(NS.live_points(), "data/unit2_live.csv");        // DS sample
+  dump(NS.dead_points(), "data/unit2_dead.csv");        // killed during run
   dump(NS.discard_points(), "data/unit2_discard.csv");  // rejected
   // proposals
 

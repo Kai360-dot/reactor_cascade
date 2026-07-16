@@ -1,14 +1,13 @@
 #ifndef LOADERS_HPP
 #define LOADERS_HPP
 
-#include <vector>
-#include <string>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
-inline
-void load_box(std::vector<double>& lb, std::vector<double>& ub)
+inline void load_box(std::vector<double>& lb, std::vector<double>& ub)
 {
   // load u2 bounds box
   std::ifstream ifs("data/unit2_inlet_box.csv");

@@ -23,7 +23,7 @@ int main()
 
   std::vector<mc::FFVar> out = Flowsheet::cstr(feed, D[0], D[1], P[0], P[1]);
   mc::FFVar tot1             = out[0] + out[1] + out[2];
-  std::vector<mc::FFVar> G{out[2] / tot1 - C[0]}; // DCB fraction cap (cstr-1)
+  std::vector<mc::FFVar> G{out[2] / tot1 - C[0]};  // DCB fraction cap (cstr-1)
 
   mc::NSFEAS NS;
   NS.options.FEASCRIT  = mc::NSFEAS::Options::VAR;
