@@ -110,7 +110,7 @@ static void validate_global_agreement()
    // src/global_sample.cpp
 
   // columns: [crit,feasprob,T1,tau1,T2,tau2]
-  auto m1 = load_csv("data/global_live_points.csv");
+  auto m1 = load_csv("data/global_live.csv");
   MLP c1  = MLP::load("data/mlp_c1.txt");
   MLP s1  = MLP::load("data/mlp_s1.txt");
   MLP cu  = MLP::load("data/mlp_cu.txt");
