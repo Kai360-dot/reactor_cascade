@@ -19,9 +19,10 @@ int main()
 {
   mc::FFGraph dag;
   Flowsheet fs(dag);
-  // only considering CSTR-1 and it's DCB fraction cap
+  // only considering CSTR-1 and reporting it's DCB fraction cap, all
+  // constraints are inactive nonetheless
   std::vector<mc::FFVar> out = fs.out1;  // cstr-1: (cA, cB, cC)-nodes of dag
-  out.push_back(fs.G[0]);
+  out.push_back(fs.G[0]);  // just for reporting, this constraint is not active
 
   // NOTE: sg only contains the three output concentrations of cstr-1 (cA, cB,
   // cC) and the constraint G[0]
