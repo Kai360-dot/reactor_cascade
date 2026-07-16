@@ -1,3 +1,8 @@
+/* Just an initial global sample across (T1, tau1, T2, tau2)
+ * It uses Nested Sampling, and provides the baseline that the ANN forward
+ * pass pipeline tried to improve against.
+ */
+
 #include <armadillo>
 #include <cstddef>
 #include <ffunc.hpp>
@@ -63,10 +68,10 @@ int main()
     }
   };
 
-  dump(NS.live_points(), "data/global_live_points.csv");  // DS sample
-  dump(NS.dead_points(), "data/global_dead_points.csv");  // killed during run
+  dump(NS.live_points(), "data/global_live.csv");  // DS sample
+  dump(NS.dead_points(), "data/global_dead.csv");  // killed during run
   dump(NS.discard_points(),
-       "data/global_discard_points.csv");  // rejected proposals
+       "data/global_discard.csv");  // rejected proposals
 
   return status;
 }
