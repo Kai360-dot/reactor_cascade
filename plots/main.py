@@ -2,9 +2,9 @@ import pandas as pd
 
 from trellis import trellis_plot
 
-df_live_ = pd.read_csv("../data/live_points.csv")
-df_dead_ = pd.read_csv("../data/dead_points.csv")
-df_disc_ = pd.read_csv("../data/discard_points.csv")
+df_live_ = pd.read_csv("../data/global_live.csv")
+df_dead_ = pd.read_csv("../data/global_dead.csv")
+df_disc_ = pd.read_csv("../data/global_discard.csv")
 
 
 def plot_df(df_live: pd.DataFrame, df_dead: pd.DataFrame):
@@ -32,7 +32,7 @@ def plot_df(df_live: pd.DataFrame, df_dead: pd.DataFrame):
         y_label=r"$T_2$ [K]",
         col_label=r"$\tau_1$ [s]",
         row_label=r"$\tau_2$ [s]",
-        save="trellis.png",
+        save="trellis_global.png",
         colors=["crimson", "royalblue"],
         ncols=3,
         nrows=3,
